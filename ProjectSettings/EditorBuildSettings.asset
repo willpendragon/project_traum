@@ -5,16 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Level Design/Scenes/train_node_dialogue.unity
+    path: Assets/Level Design/Scenes/1_beginning_scene.unity
+    guid: 5c61a3ae4e6e6024289529121cc281f3
+  - enabled: 1
+    path: Assets/Level Design/Scenes/2_sector_one.unity
+    guid: 973caafadf1ef6c44894aa698365c51b
+  - enabled: 1
+    path: Assets/Level Design/Scenes/3_train_node.unity
+    guid: 1ce1217c489ce4d4e92fba578a955181
+  - enabled: 1
+    path: Assets/Level Design/Scenes/4_train_dialogue_2.unity
     guid: 2452873ed19aa974ea6642adec2ac8ae
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Level Design/Scenes/5_sector_two.unity
+    guid: bc599e873f253bd4e9268c968ff6c164
   m_configObjects: {}
