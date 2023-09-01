@@ -6,6 +6,15 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Events;
 
+public enum PlayerControllerDirection
+{
+    PlayerControllerUp,
+    PlayerControllerDown,
+    PlayerControllerLeft,
+    PlayerControllerRight,
+    PlayerControllerStill
+}
+
 public class PlayerController : MonoBehaviour
 {
     public UnityEvent ChargedBulletShot;
@@ -25,10 +34,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector2 augmentedJumpForce;
     [SerializeField] float movementSmoothing;
     [SerializeField] Vector2 velocityRef;
-    //[SerializeField] float jumpHeight = 1f;
+    public Vector3 characterLastPosition;
+    public PlayerControllerDirection currentPlayerControllerDirection;
+
+    private void Start()
+    {
+        characterLastPosition = new Vector3(1, 1, 1);
+        //currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerStill;
+    }
 
     void Update()
     {
+        MoveCharacter();
+
         if (playerAbilities.chargedShotActivated)
         {
             ChargeBulletAbility();
@@ -37,7 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             BasicBulletAbility();
         }
-        MoveCharacter();
+
         if (Input.GetButtonDown("Jump") && CharacterIsGrounded())
         {
             characterRigidbody.velocity = Vector3.zero;
@@ -51,10 +69,38 @@ public class PlayerController : MonoBehaviour
     private void MoveCharacter()
     {
         var horizontalInput = Input.GetAxis("Horizontal");
+        var verticalInput = Input.GetAxis("Vertical");
         characterAnimator.SetFloat("horizontalInput", Mathf.Abs(horizontalInput));
 
         Vector2 targetVelocity = new Vector2(horizontalInput * characterSpeed, characterRigidbody.velocity.y);
         characterRigidbody.velocity = Vector2.SmoothDamp(characterRigidbody.velocity, targetVelocity, ref velocityRef, movementSmoothing);
+
+        if (verticalInput > 0.1)
+        {
+            currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerUp;
+            Debug.Log("Player Controller Up");
+        }
+        else if (horizontalInput < 0 && horizontalInput != 0)
+        {
+            transform.localScale = new Vector3(-1,1,1);
+            characterLastPosition = transform.localScale;
+            currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerLeft;
+            Debug.Log("Player Controller Left");
+        }
+        else if (horizontalInput > 0 && horizontalInput != 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            characterLastPosition = transform.localScale;
+            currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerRight;
+            Debug.Log("Player Controller Right");
+        }
+        else if (horizontalInput == 0)
+        {
+            currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerStill;
+            Debug.Log(characterLastPosition);
+            transform.localScale = characterLastPosition;
+            Debug.Log("Player Controller Still");
+        }
     }
     private void Jump()
     {

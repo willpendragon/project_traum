@@ -102,9 +102,10 @@ MonoBehaviour:
   bulletRigidbody: {fileID: 2470318101536522892}
   bulletLifeTime: 1
   bulletAttackPower: 1
-  bulletForce: {x: 2, y: 0}
+  bulletForce: {x: 0, y: 0}
   bulletCollider: {fileID: 870757679266176076}
-  bulletChargedPower: 0.1419534
+  bulletChargedPower: 0
+  direction: 0
 --- !u!50 &2470318101536522892
 Rigidbody2D:
   serializedVersion: 4
@@ -125,7 +126,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 2
+  m_Constraints: 0
 --- !u!70 &870757679266176076
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
