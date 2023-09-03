@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   postExposure:
-    m_OverrideState: 0
-    m_Value: -1.1
+    m_OverrideState: 1
+    m_Value: 0.26
   contrast:
     m_OverrideState: 0
     m_Value: 24
@@ -28,6 +28,31 @@ MonoBehaviour:
   saturation:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &-5159880741627021337
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fa0085f50d5e54f8144f766051a691, type: 3}
+  m_Name: FilmGrain
+  m_EditorClassIdentifier: 
+  active: 1
+  type:
+    m_OverrideState: 1
+    m_Value: 0
+  intensity:
+    m_OverrideState: 1
+    m_Value: 1
+  response:
+    m_OverrideState: 0
+    m_Value: 0.8
+  texture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,6 +68,8 @@ MonoBehaviour:
   components:
   - {fileID: 487909938926565089}
   - {fileID: -8702946217451186430}
+  - {fileID: 3742380227765274265}
+  - {fileID: -5159880741627021337}
 --- !u!114 &487909938926565089
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -59,3 +86,31 @@ MonoBehaviour:
   intensity:
     m_OverrideState: 1
     m_Value: 0.204
+--- !u!114 &3742380227765274265
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 899c54efeace73346a0a16faa3afe726, type: 3}
+  m_Name: Vignette
+  m_EditorClassIdentifier: 
+  active: 1
+  color:
+    m_OverrideState: 1
+    m_Value: {r: 0.015686275, g: 0.04705883, b: 0.09019608, a: 1}
+  center:
+    m_OverrideState: 1
+    m_Value: {x: 0.5, y: 0.5}
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.51
+  smoothness:
+    m_OverrideState: 1
+    m_Value: 0.58
+  rounded:
+    m_OverrideState: 0
+    m_Value: 1

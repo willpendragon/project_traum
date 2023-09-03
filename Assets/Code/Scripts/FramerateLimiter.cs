@@ -11,7 +11,7 @@ public class FramerateLimiter : MonoBehaviour
     }
     void Start()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 25;
     }
 
     // Update is called once per frame
