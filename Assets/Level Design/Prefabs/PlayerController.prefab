@@ -65,6 +65,7 @@ GameObject:
   - component: {fileID: 2503087595635436747}
   - component: {fileID: 2503087595635436745}
   - component: {fileID: 2503087595635436751}
+  - component: {fileID: 8586532843837955199}
   m_Layer: 7
   m_Name: PlayerController
   m_TagString: Player
@@ -132,7 +133,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -692856980, guid: 93622ff12f8290e429abd642b7926b2d, type: 3}
+  m_Sprite: {fileID: -423841393, guid: b83f1e74ebc6dae499f799fc53fc10b6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -201,6 +202,8 @@ MonoBehaviour:
   augmentedJumpForce: {x: 0, y: 5}
   movementSmoothing: 0
   velocityRef: {x: 0, y: 0}
+  characterLastPosition: {x: 0, y: 0, z: 0}
+  currentPlayerControllerDirection: 0
 --- !u!95 &2503087595635436740
 Animator:
   serializedVersion: 4
@@ -211,7 +214,7 @@ Animator:
   m_GameObject: {fileID: 2503087595635436737}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e652972ceefe63d46a8018ca082331ae, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1edaa7ed3a8d0664aa0fd903da88c559, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -360,6 +363,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 2503087595635436740}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: SetTrigger
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: DialogueIsActive
+            m_BoolArgument: 0
+          m_CallState: 2
     onConversationEnd:
       m_PersistentCalls:
         m_Calls:
@@ -373,6 +388,18 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 2503087595635436740}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: SetTrigger
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: DialogueIsNotActive
             m_BoolArgument: 1
           m_CallState: 2
     runOnConversationEndEventsAtEndOfFrame: 0
@@ -434,6 +461,25 @@ MonoBehaviour:
     onDialogueSystemUnpause:
       m_PersistentCalls:
         m_Calls: []
+--- !u!114 &8586532843837955199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2503087595635436737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af33a602e20a3d4ca46c8a6ef942618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_key: hariPosition
+  m_appendSaverTypeToKey: 0
+  m_saveAcrossSceneChanges: 1
+  m_restoreStateOnStart: 0
+  m_target: {fileID: 0}
+  m_usePlayerSpawnpoint: 1
+  m_multiscene: 1
 --- !u!1 &2503087596177823988
 GameObject:
   m_ObjectHideFlags: 0

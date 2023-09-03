@@ -43,6 +43,11 @@ public class PlayerController : MonoBehaviour
         //currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerStill;
     }
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     void Update()
     {
         MoveCharacter();
@@ -82,7 +87,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (horizontalInput < 0 && horizontalInput != 0)
         {
-            transform.localScale = new Vector3(-1,1,1);
+            transform.localScale = new Vector3(-1, 1, 1);
             characterLastPosition = transform.localScale;
             currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerLeft;
             Debug.Log("Player Controller Left");

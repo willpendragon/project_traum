@@ -883,7 +883,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0
+  weight: 1
   sharedProfile: {fileID: 11400000, guid: 84921e057b98151478406d4c96aaf973, type: 2}
 --- !u!4 &334579921
 Transform:
@@ -7438,7 +7438,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -692856980, guid: 93622ff12f8290e429abd642b7926b2d, type: 3}
+  m_Sprite: {fileID: 67000789, guid: 85039a1fce3624f4aa63cfc8addbb77f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7499,6 +7499,8 @@ MonoBehaviour:
   augmentedJumpForce: {x: 0, y: 0}
   movementSmoothing: 0
   velocityRef: {x: 0, y: 0}
+  characterLastPosition: {x: 0, y: 0, z: 0}
+  currentPlayerControllerDirection: 0
 --- !u!95 &1074389143
 Animator:
   serializedVersion: 4
