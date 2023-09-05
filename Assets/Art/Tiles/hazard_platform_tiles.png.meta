@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e57fe6b7aeac5c947b70e898a281ed4c
+guid: 7413e11fa717fae45b8de9c7608b3779
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,7 +104,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: platform_tiles_0
+      name: hazard_platform_tiles_0
       rect:
         serializedVersion: 2
         x: 0
@@ -112,20 +112,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d81d378be46aa247b159b445ab0a8a2
-      internalID: 1992541422
+      spriteID: 83837b77e95d7d343a2ad646c066ddd6
+      internalID: -1875513919
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: platform_tiles_1
+      name: hazard_platform_tiles_1
       rect:
         serializedVersion: 2
         x: 16
@@ -133,20 +133,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5683e92cdf3d5a948ab3fec4d936828e
-      internalID: 1910820324
+      spriteID: 4bb1e743e00841f479fcc9cd4a1d4763
+      internalID: -1443820293
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: platform_tiles_2
+      name: hazard_platform_tiles_2
       rect:
         serializedVersion: 2
         x: 0
@@ -154,20 +154,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 09ef10740e688cb41a84885cafb79c68
-      internalID: 1348603408
+      spriteID: 5c1d8404f42dda44caaa140c65685adf
+      internalID: 474728733
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: platform_tiles_3
+      name: hazard_platform_tiles_3
       rect:
         serializedVersion: 2
         x: 16
@@ -175,14 +175,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f9f4a372349701f4aa36896513c46e5e
-      internalID: 1676729709
+      spriteID: 163a4e4f8f65e774f93b87e7b5a20c62
+      internalID: -567588592
       vertices: []
       indices: 
       edges: []
@@ -198,10 +198,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      platform_tiles_2: 1348603408
-      platform_tiles_3: 1676729709
-      platform_tiles_0: 1992541422
-      platform_tiles_1: 1910820324
+      hazard_platform_tiles_0: -1875513919
+      hazard_platform_tiles_1: -1443820293
+      hazard_platform_tiles_2: 474728733
+      hazard_platform_tiles_3: -567588592
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

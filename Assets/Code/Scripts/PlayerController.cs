@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Events;
+using UnityEngine.UI;
+using Cinemachine;
 
 public enum PlayerControllerDirection
 {
@@ -18,7 +20,6 @@ public enum PlayerControllerDirection
 public class PlayerController : MonoBehaviour
 {
     public UnityEvent ChargedBulletShot;
-    public UnityEvent PlayerCharacterDeath;
 
     [SerializeField] float characterSpeed;
     [SerializeField] Rigidbody2D characterRigidbody;
@@ -34,15 +35,24 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector2 augmentedJumpForce;
     [SerializeField] float movementSmoothing;
     [SerializeField] Vector2 velocityRef;
+    [SerializeField] Slider healthSlider;
     public Vector3 characterLastPosition;
     public PlayerControllerDirection currentPlayerControllerDirection;
 
+    public delegate void PlayerCharacterDeath();
+    public static event PlayerCharacterDeath OnPlayerCharacterDeath;
+
     private void Start()
     {
+        SetHealthSlider();
         characterLastPosition = new Vector3(1, 1, 1);
         //currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerStill;
+        CinemachineVirtualCamera[] vcams = FindObjectsOfType<CinemachineVirtualCamera>();
+        foreach (var vcam in vcams)
+        {
+            vcam.Follow = this.transform;
+        }
     }
-
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -66,10 +76,16 @@ public class PlayerController : MonoBehaviour
             characterRigidbody.velocity = Vector3.zero;
             Jump();
         }
-        if (playerStats.currentHealth <= 0)
-        {
-            PlayerCharacterDeath.Invoke();
-        }
+    }
+    public void SetHealthSlider()
+    {
+        healthSlider.minValue = 0;
+        healthSlider.maxValue = playerStats.maximumHealth;
+        healthSlider.value = playerStats.maximumHealth;
+    }
+    public void UpdateHealthSlider()
+    {
+        healthSlider.value = playerStats.currentHealth;
     }
     private void MoveCharacter()
     {
@@ -160,5 +176,12 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float receivedDamage)
     {
         playerStats.currentHealth -= receivedDamage;
+        characterAnimator.SetTrigger("mainCharacterHurt");
+        UpdateHealthSlider();
+        if (playerStats.currentHealth <= 0)
+        {
+            Debug.Log("Player died");
+            OnPlayerCharacterDeath();
+        }
     }
 }

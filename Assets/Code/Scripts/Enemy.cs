@@ -17,10 +17,17 @@ public class Enemy : MonoBehaviour
     public EnemyAlertStatus currentEnemyAlertStatus;
     [SerializeField] Vector2 smoothDampVelocity;
     [SerializeField] float smoothDampTime;
+    [SerializeField] bool shootingVariant;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] Animator playerAnimator;
 
     public void Start()
     {
         currentEnemyAlertStatus = EnemyAlertStatus.enemyAlertIsNotActive;
+        if (shootingVariant == true)
+        {
+            InvokeRepeating("ShootProjectileAtThePlayer", 1f, 1f);
+        }
     }
     public void Update()
     {
@@ -29,6 +36,7 @@ public class Enemy : MonoBehaviour
             MoveTowardsPlayer();
         }
     }
+
     public void ActivateEnemyAlertStatus()
     {
         currentEnemyAlertStatus = EnemyAlertStatus.enemyAlertIsActive;
@@ -39,6 +47,7 @@ public class Enemy : MonoBehaviour
         Debug.Log(incomingDamage);
         enemyHP -= incomingDamage;
         CheckEnemyStatus();
+        playerAnimator.SetTrigger("enemyHurt");
     }
     public void CheckEnemyStatus()
     {
@@ -53,14 +62,6 @@ public class Enemy : MonoBehaviour
     }
     public void MoveTowardsPlayer()
     {
-        /*
-        Debug.Log("Enemy moves towards Player");
-        var playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
-        Vector2 finalPlayerPosition = new Vector2(playerPosition.x, transform.position.y);
-        Vector2 newPosition = Vector2.MoveTowards(transform.position, finalPlayerPosition, enemyChaseVelocity * Time.deltaTime);
-        enemyRigidbody.MovePosition(newPosition);
-        */
-        Debug.Log("Enemy moves towards Player");
         var playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
 
         // Calculate the direction to the player
@@ -72,7 +73,7 @@ public class Enemy : MonoBehaviour
         // Smoothly adjust the current velocity toward the target velocity
         enemyRigidbody.velocity = Vector2.SmoothDamp(enemyRigidbody.velocity, targetVelocity, ref smoothDampVelocity, smoothDampTime);
 
-        // Optional: Align the enemy's forward direction with the movement direction
+        // Align the enemy's forward direction with the movement direction
         if (enemyRigidbody.velocity.magnitude > 0.1f)
         {
             float targetAngle = Mathf.Atan2(enemyRigidbody.velocity.y, enemyRigidbody.velocity.x) * Mathf.Rad2Deg;
@@ -85,5 +86,10 @@ public class Enemy : MonoBehaviour
         Debug.Log("Attacking player");
         var playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>(); 
         playerController.TakeDamage(enemyPower);
+    }
+
+    public void ShootProjectileAtThePlayer()
+    {
+        Instantiate(bulletPrefab, transform.position, Quaternion.identity);
     }
 }
