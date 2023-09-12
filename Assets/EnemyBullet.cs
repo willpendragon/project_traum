@@ -8,17 +8,18 @@ public class EnemyBullet : MonoBehaviour
     [SerializeField] Rigidbody2D bulletRigidbody;
     private Vector2 playerPosition;
     PlayerController player;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] float enemyBulletPower;
+    [SerializeField] LayerMask playerBulletLayer;
+
+    private void OnEnable()
     {
+        //subscribe to PlayerController
     }
 
-    // Update is called once per frame
     void Update()
     {
         FollowPlayer();
     }
-
     void FollowPlayer()
     {
         var playerPosition = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().transform.position;
@@ -38,7 +39,26 @@ public class EnemyBullet : MonoBehaviour
         {
             float targetAngle = Mathf.Atan2(bulletRigidbody.velocity.y, bulletRigidbody.velocity.x) * Mathf.Rad2Deg;
             bulletRigidbody.rotation = 1;
-
         }
+    }
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "PlayerHitbox")
+        {
+            Debug.Log("Player Collided with Enemy Bullet");
+            HitPlayer();
+        }
+        else if (collision.gameObject.tag == "PlayerBullet")
+        {
+            Debug.Log("Destroying Player bullet");
+            Destroy(this.gameObject, 0.1f);
+            
+        }
+    }
+    public void HitPlayer()
+    {
+        Debug.Log("Attacking player with Bullet");
+        var playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        playerController.TakeDamage(enemyBulletPower);
     }
 }

@@ -28,4 +28,9 @@ public class PlayerStats : MonoBehaviour
     {
         currentChargedShotFuel--;
     }
+
+    public void RestoreHealth()
+    {
+        currentHealth = maximumHealth;
+    }
 }

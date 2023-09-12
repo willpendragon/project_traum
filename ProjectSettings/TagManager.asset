@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - EnemyHitbox
   - PlayerHitbox
+  - PlayerBullet
+  - DialogueManager
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - EnemyHitbox
   - Wall
   - PlayerHitbox
-  - 
+  - EnemyBullet
   - 
   - 
   - 

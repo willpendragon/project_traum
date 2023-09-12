@@ -12,7 +12,6 @@ public class Bullet : MonoBehaviour
     private PlayerController playerController;
     public float bulletChargedPower;
 
-
     void Start()
     {
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();

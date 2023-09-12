@@ -178,6 +178,10 @@ public class PlayerController : MonoBehaviour
         playerStats.currentHealth -= receivedDamage;
         characterAnimator.SetTrigger("mainCharacterHurt");
         UpdateHealthSlider();
+    }
+    public void CheckPlayerHealth()
+    {
+        Debug.Log("Checking Player health");
         if (playerStats.currentHealth <= 0)
         {
             Debug.Log("Player died");

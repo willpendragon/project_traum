@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 870757679266176076}
   m_Layer: 6
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,11 +101,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletRigidbody: {fileID: 2470318101536522892}
   bulletLifeTime: 1
-  bulletAttackPower: 1
+  bulletAttackPower: 2.5
   bulletForce: {x: 0, y: 0}
   bulletCollider: {fileID: 870757679266176076}
   bulletChargedPower: 0
-  direction: 0
 --- !u!50 &2470318101536522892
 Rigidbody2D:
   serializedVersion: 4

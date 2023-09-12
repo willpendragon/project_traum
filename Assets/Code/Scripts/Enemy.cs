@@ -20,14 +20,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] bool shootingVariant;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Animator playerAnimator;
+    private bool shootingCooldownIsActive;
 
     public void Start()
     {
         currentEnemyAlertStatus = EnemyAlertStatus.enemyAlertIsNotActive;
-        if (shootingVariant == true)
-        {
-            InvokeRepeating("ShootProjectileAtThePlayer", 1f, 1f);
-        }
     }
     public void Update()
     {
@@ -78,18 +75,39 @@ public class Enemy : MonoBehaviour
         {
             float targetAngle = Mathf.Atan2(enemyRigidbody.velocity.y, enemyRigidbody.velocity.x) * Mathf.Rad2Deg;
             enemyRigidbody.rotation = 1;
-
         }
     }
     public void HurtPlayer()
     {
         Debug.Log("Attacking player");
-        var playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>(); 
+        var playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         playerController.TakeDamage(enemyPower);
     }
 
     public void ShootProjectileAtThePlayer()
     {
         Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+    }
+
+    public void ShootPlayer()
+    {
+        if (shootingVariant == true)
+        {
+            if (shootingCooldownIsActive == false)
+            {
+                Debug.Log("Bullet shooting delay running");
+            }
+            else if (shootingCooldownIsActive == true)
+            {
+                ShootProjectileAtThePlayer();
+                StartCoroutine("ShootingCooldown");
+            }
+        }
+    }
+    IEnumerator ShootingCooldown()
+    {
+        shootingCooldownIsActive = true;
+        yield return new WaitForSeconds(5);
+        shootingCooldownIsActive = false;
     }
 }
