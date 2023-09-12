@@ -20,10 +20,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] bool shootingVariant;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Animator playerAnimator;
+    [SerializeField] Animator enemyVFXAnimator;
     private bool shootingCooldownIsActive;
 
     public void Start()
     {
+        enemyVFXAnimator.GetComponentInParent<SpriteRenderer>().enabled = false;
         currentEnemyAlertStatus = EnemyAlertStatus.enemyAlertIsNotActive;
     }
     public void Update()
@@ -55,7 +57,9 @@ public class Enemy : MonoBehaviour
     }
     public void EnemyDies()
     {
-        Destroy(this.gameObject, 0.1f);
+        enemyVFXAnimator.SetTrigger("enemyHasDied");
+        enemyVFXAnimator.GetComponentInParent<SpriteRenderer>().enabled = true;
+        Destroy(this.gameObject, 0.5f);
     }
     public void MoveTowardsPlayer()
     {
