@@ -39,8 +39,8 @@ public class GameManager : MonoBehaviour
         }
         currentPlayerPrefab = GameObject.FindGameObjectWithTag("Player");
         //Assign Cameras to Player
-        virtualCamera.GetComponent<CinemachineBlendListCamera>().Follow = currentPlayerPrefab.transform;
-        shakeCamera.GetComponent<CinemachineBlendListCamera>().Follow = currentPlayerPrefab.transform;
+        //virtualCamera.GetComponent<CinemachineBlendListCamera>().Follow = currentPlayerPrefab.transform;
+        //shakeCamera.GetComponent<CinemachineBlendListCamera>().Follow = currentPlayerPrefab.transform;
     }
 
     // Update is called once per frame
