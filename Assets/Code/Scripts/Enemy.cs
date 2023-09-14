@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum EnemyAlertStatus
 {
@@ -22,6 +23,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] Animator playerAnimator;
     [SerializeField] Animator enemyVFXAnimator;
     private bool shootingCooldownIsActive;
+    public AudioSource enemyDeathSound;
+
+    public UnityEvent EnemyHurt;
+    public UnityEvent EnemyDyingScream;
 
     public void Start()
     {
@@ -47,6 +52,7 @@ public class Enemy : MonoBehaviour
         enemyHP -= incomingDamage;
         CheckEnemyStatus();
         playerAnimator.SetTrigger("enemyHurt");
+        EnemyHurt.Invoke();
     }
     public void CheckEnemyStatus()
     {
@@ -59,7 +65,9 @@ public class Enemy : MonoBehaviour
     {
         enemyVFXAnimator.SetTrigger("enemyHasDied");
         enemyVFXAnimator.GetComponentInParent<SpriteRenderer>().enabled = true;
-        Destroy(this.gameObject, 0.5f);
+        //enemyDeathSound.Play();
+        EnemyDyingScream.Invoke();
+        Destroy(this.gameObject, 2f);
     }
     public void MoveTowardsPlayer()
     {
@@ -83,6 +91,7 @@ public class Enemy : MonoBehaviour
     }
     public void HurtPlayer()
     {
+        enemyDeathSound.Play();
         Debug.Log("Attacking player");
         var playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         playerController.TakeDamage(enemyPower);

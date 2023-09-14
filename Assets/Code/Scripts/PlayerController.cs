@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Cinemachine;
+using DG.Tweening;
 
 public enum PlayerControllerDirection
 {
@@ -36,11 +37,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float movementSmoothing;
     [SerializeField] Vector2 velocityRef;
     [SerializeField] Slider healthSlider;
+    [SerializeField] RectTransform playerHealthBar;
     public Vector3 characterLastPosition;
     public PlayerControllerDirection currentPlayerControllerDirection;
 
     public delegate void PlayerCharacterDeath();
     public static event PlayerCharacterDeath OnPlayerCharacterDeath;
+
+    public UnityEvent PlayerShotBasicBullet;
 
     private void Start()
     {
@@ -106,6 +110,7 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
             characterLastPosition = transform.localScale;
             currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerLeft;
+            playerHealthBar.localScale = new Vector3(-1, 1, 1);
             Debug.Log("Player Controller Left");
         }
         else if (horizontalInput > 0 && horizontalInput != 0)
@@ -113,6 +118,7 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
             characterLastPosition = transform.localScale;
             currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerRight;
+            playerHealthBar.localScale = new Vector3(1, 1, 1);
             Debug.Log("Player Controller Right");
         }
         else if (horizontalInput == 0)
@@ -170,6 +176,7 @@ public class PlayerController : MonoBehaviour
         {
             bulletPrefab.GetComponent<Bullet>().bulletChargedPower = bulletCharge * 2;
             Instantiate(bulletPrefab, bulletOrigin.position, Quaternion.identity);
+            PlayerShotBasicBullet.Invoke();
             Debug.Log("Shooting Basic Bullet");
         }
     }
