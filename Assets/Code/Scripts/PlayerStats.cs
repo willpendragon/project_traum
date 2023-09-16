@@ -11,6 +11,18 @@ public class PlayerStats : MonoBehaviour
     public float currentHealth;
     public float maximumHealth;
 
+    private void OnEnable()
+    {
+        PlayerMaxHealthIncreaser.OnPlayerHealthIncrease += PlayerMaxHealthPowerUp;
+        PlayerMaxHealthIncreaser.OnPlayerHealthIncrease_2 += PlayerMaxHealthPowerUp_2;
+    }
+
+    private void OnDisable()
+    {
+        PlayerMaxHealthIncreaser.OnPlayerHealthIncrease += PlayerMaxHealthPowerUp;
+        PlayerMaxHealthIncreaser.OnPlayerHealthIncrease_2 += PlayerMaxHealthPowerUp_2;
+    }
+
     private void Start()
     {
         currentHealth = maximumHealth;
@@ -31,6 +43,20 @@ public class PlayerStats : MonoBehaviour
 
     public void RestoreHealth()
     {
+        currentHealth = maximumHealth;
+    }
+
+    public void PlayerMaxHealthPowerUp()
+    {
+        Debug.Log("PlayerMaxHealth Increase");
+        maximumHealth = maximumHealth + 20;
+        currentHealth = maximumHealth;
+    }
+
+    public void PlayerMaxHealthPowerUp_2()
+    {
+        Debug.Log("PlayerMaxHealth Increase 2");
+        maximumHealth = maximumHealth + 40;
         currentHealth = maximumHealth;
     }
 }

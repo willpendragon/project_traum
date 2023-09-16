@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,15 +10,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject currentPlayerPrefab;
     [SerializeField] GameObject virtualCamera;
     [SerializeField] GameObject shakeCamera;
+    [SerializeField] Text hyperJumpText;
+    [SerializeField] Text chargedGunText;
     private static GameManager _instance;
     private void OnEnable()
     {
         PlayerController.OnPlayerCharacterDeath += PlayerCharacterDeathSequence;
+        DoubleJumpUnlocker.OnUnlockDoubleJump += ShowHyperJumpOnUI;
+        DoubleJumpUnlocker.OnUnlockChargedShot += ShowChargedGunOnUI;
     }
-
     private void OnDisable()
     {
         PlayerController.OnPlayerCharacterDeath -= PlayerCharacterDeathSequence;
+        DoubleJumpUnlocker.OnUnlockDoubleJump -= ShowHyperJumpOnUI;
+        DoubleJumpUnlocker.OnUnlockChargedShot -= ShowChargedGunOnUI;
     }
     private void Awake()
     {
@@ -56,7 +62,7 @@ public class GameManager : MonoBehaviour
         //Get Level Beginning Transform
         currentPlayerController.transform.position = spawnPoint.position;
         //Instantiate(playerPrefab, spawnPoint);
-        currentPlayerPrefab = GameObject.FindGameObjectWithTag("Player");
+        //currentPlayerPrefab = GameObject.FindGameObjectWithTag("Player");
         //virtualCamera.GetComponent<CinemachineBlendListCamera>().Follow = currentPlayerPrefab.transform;
         //shakeCamera.GetComponent<CinemachineBlendListCamera>().Follow = currentPlayerPrefab.transform;
         StartCoroutine("RestorePlayerHealth");
@@ -68,10 +74,19 @@ public class GameManager : MonoBehaviour
 
     IEnumerator RestorePlayerHealth()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         Debug.Log("Restoring Player Health");
         GameObject currentPlayerController = GameObject.FindGameObjectWithTag("Player");
         //currentPlayerPrefab = GameObject.FindGameObjectWithTag("Player");
         currentPlayerController.GetComponentInChildren<PlayerStats>().currentHealth = 20;
+    }
+
+    public void ShowHyperJumpOnUI()
+    {
+        hyperJumpText.enabled = true;
+    }
+    public void ShowChargedGunOnUI()
+    {
+        chargedGunText.enabled = true;
     }
 }
