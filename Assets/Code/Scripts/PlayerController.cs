@@ -134,11 +134,11 @@ public class PlayerController : MonoBehaviour
         //characterRigidbody.velocity = (Vector2.up * jumpHeight);
         if (playerAbilities.doubleJumpActivated == false)
         {
-            characterRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            characterRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);
         }
         else if (playerAbilities.doubleJumpActivated == true)
         {
-            characterRigidbody.AddForce(Vector2.up * augmentedJumpForce, ForceMode2D.Impulse);
+            characterRigidbody.AddForce(Vector2.up * augmentedJumpForce, ForceMode2D.Force);
         }
     }
     private bool CharacterIsGrounded()
@@ -194,5 +194,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Player died");
             OnPlayerCharacterDeath();
         }
+    }
+    public void SetPlayerShootUpAnimation()
+    {
+        characterAnimator.SetTrigger("shootingUp");
+    }
+
+    public void SetPlayerBasicShootingAnimation()
+    {
+        characterAnimator.SetTrigger("basicShooting");
     }
 }

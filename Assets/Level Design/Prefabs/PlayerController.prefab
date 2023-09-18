@@ -326,8 +326,8 @@ MonoBehaviour:
   bulletMaximumCharge: 5
   playerAbilities: {fileID: 4267632596138064929}
   playerStats: {fileID: 4336291177225411111}
-  jumpForce: {x: 0, y: 3}
-  augmentedJumpForce: {x: 0, y: 5}
+  jumpForce: {x: 0, y: 2.5}
+  augmentedJumpForce: {x: 0, y: 4.5}
   movementSmoothing: 0
   velocityRef: {x: 0, y: 0}
   healthSlider: {fileID: 2920935977878021747}
@@ -445,10 +445,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.023
   m_LinearDrag: 0.36
   m_AngularDrag: 1
-  m_GravityScale: 1
+  m_GravityScale: 0.61
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
