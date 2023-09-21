@@ -1,2 +1,2 @@
 # project_traum
- A game made for Metroidvania Game Jam (August-September 2023)
+ An atmospheric sci-fi game made for Metroidvania Month XII (August-September 2023)
