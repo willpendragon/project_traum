@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        healthSlider.value = playerStats.currentHealth;
         MoveCharacter();
 
         if (playerAbilities.chargedShotActivated)

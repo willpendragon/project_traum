@@ -324,7 +324,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1627431397692192137, guid: 1d3fbf3f2c6e5594bb0986fd420162fe, type: 3}
       propertyPath: m_RootOrder
-      value: 30
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 1627431397692192137, guid: 1d3fbf3f2c6e5594bb0986fd420162fe, type: 3}
       propertyPath: m_LocalScale.x
@@ -76511,6 +76511,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 0}
   playerAnimator: {fileID: 0}
   enemyVFXAnimator: {fileID: 0}
+  enemyBossLogic: {fileID: 0}
   enemyDeathSound: {fileID: 0}
   EnemyHurt:
     m_PersistentCalls:
@@ -86191,7 +86192,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 29
+  m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &964174279
 GameObject:

@@ -17,6 +17,8 @@ public class EnemyBossLogic : MonoBehaviour
     public Vector2 enemyLaserGraphicsLocalScale;
     public Vector3 enemyBossDamageAreaSize;
     public ParticleSystem laserParticleSystem;
+    public SpriteRenderer enemyBossSprite;
+    public SpriteRenderer damagedEnemyBossSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -46,5 +48,10 @@ public class EnemyBossLogic : MonoBehaviour
         enemyDamageArea.size = new Vector2(0, 0);
         enemyLaserLight.intensity = 0;
         enemyLaserGraphics.transform.localScale = new Vector3(0, 0, 0);
+    }
+
+    public void UpdateSprite()
+    {
+        enemyBossSprite.sprite = damagedEnemyBossSprite.sprite;
     }
 }

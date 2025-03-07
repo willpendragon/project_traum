@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Animator playerAnimator;
     [SerializeField] Animator enemyVFXAnimator;
+    [SerializeField] EnemyBossLogic enemyBossLogic;
     private bool shootingCooldownIsActive;
     public AudioSource enemyDeathSound;
 
@@ -38,6 +39,13 @@ public class Enemy : MonoBehaviour
         if (currentEnemyAlertStatus == EnemyAlertStatus.enemyAlertIsActive)
         {
             MoveTowardsPlayer();
+        }
+        if (enemyBossLogic != null)
+        {
+            if (enemyHP < 150)
+            {
+                enemyBossLogic.UpdateSprite();
+            }
         }
     }
 
