@@ -1,13 +1,10 @@
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Cinemachine;
-using DG.Tweening;
+using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using System;
 
 public enum PlayerControllerDirection
 {
@@ -28,8 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator characterAnimator;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform bulletOrigin;
-    [SerializeField] float bulletCharge;
-    [SerializeField] float bulletMaximumCharge;
+    [SerializeField] private float bulletCharge;
+    [SerializeField] private float bulletMaximumCharge;
     [SerializeField] PlayerAbilities playerAbilities;
     [SerializeField] PlayerStats playerStats;
     [SerializeField] Vector2 jumpForce;
@@ -40,47 +37,95 @@ public class PlayerController : MonoBehaviour
     [SerializeField] RectTransform playerHealthBar;
     public Vector3 characterLastPosition;
     public PlayerControllerDirection currentPlayerControllerDirection;
+    public PlayerInputActions playerControls;
+    private InputAction move;
+    private InputAction chargeBullet;
+    private InputAction shootBullet;
+    private InputAction jump;
+    bool charging;
+
 
     public delegate void PlayerCharacterDeath();
     public static event PlayerCharacterDeath OnPlayerCharacterDeath;
 
     public UnityEvent PlayerShotBasicBullet;
 
+    private void Awake()
+    {
+        playerControls = new PlayerInputActions();
+
+        DontDestroyOnLoad(this.gameObject);
+    }
+    public bool GetCharge()
+    {
+        return charging;
+    }
+
+    private void ChargeBulletCanceled(InputAction.CallbackContext context)
+    {
+        charging = false;
+    }
+
+    private void ChargeBulletPerformed(InputAction.CallbackContext context)
+    {
+        charging = true;
+    }
+
+    private void OnEnable()
+    {
+        move = playerControls.Player.Move;
+        chargeBullet = playerControls.Player.ChargeBullet;
+        shootBullet = playerControls.Player.ShootBullet;
+        jump = playerControls.Player.Jump;
+        move.Enable();
+        chargeBullet.Enable();
+        shootBullet.Enable();
+        jump.Enable();
+        chargeBullet.performed += ChargeBulletPerformed;
+        chargeBullet.canceled += ChargeBulletCanceled;
+        shootBullet.performed += ShootBullet;
+        jump.performed += Jump;
+    }
+
+    private void OnDisable()
+    {
+        move.Disable();
+        chargeBullet.Disable();
+        chargeBullet.performed -= ChargeBulletPerformed;
+        chargeBullet.canceled -= ChargeBulletCanceled;
+        shootBullet.performed -= ShootBullet;
+        jump.performed -= Jump;
+    }
+
     private void Start()
     {
         SetHealthSlider();
         characterLastPosition = new Vector3(1, 1, 1);
-        //currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerStill;
         CinemachineVirtualCamera[] vcams = FindObjectsOfType<CinemachineVirtualCamera>();
         foreach (var vcam in vcams)
         {
             vcam.Follow = this.transform;
         }
     }
-    private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
 
     void Update()
     {
         healthSlider.value = playerStats.currentHealth;
         MoveCharacter();
-
-        if (playerAbilities.chargedShotActivated)
+        if (GetCharge() && bulletCharge < bulletMaximumCharge)
         {
-            ChargeBulletAbility();
+            bulletCharge += Time.deltaTime;
         }
-        else if (playerAbilities.basicShotActivated)
-        {
-            BasicBulletAbility();
-        }
-
-        if (Input.GetButtonDown("Jump") && CharacterIsGrounded())
-        {
-            characterRigidbody.velocity = Vector3.zero;
-            Jump();
-        }
+        //else
+        //{
+        //    bulletCharge -= Time.deltaTime;
+        //}
+        // Remember that some elements of the level design require the bullet charge to be unlocked.
+        //if (Input.GetButtonDown("Jump") && CharacterIsGrounded())
+        //{
+        //    characterRigidbody.velocity = Vector3.zero;
+        //    Jump();
+        //}
     }
     public void SetHealthSlider()
     {
@@ -94,19 +139,20 @@ public class PlayerController : MonoBehaviour
     }
     private void MoveCharacter()
     {
-        var horizontalInput = Input.GetAxis("Horizontal");
-        var verticalInput = Input.GetAxis("Vertical");
-        characterAnimator.SetFloat("horizontalInput", Mathf.Abs(horizontalInput));
+        var moveDirection = move.ReadValue<Vector2>();
+        Debug.Log(moveDirection);
 
-        Vector2 targetVelocity = new Vector2(horizontalInput * characterSpeed, characterRigidbody.velocity.y);
+        characterAnimator.SetFloat("horizontalInput", Mathf.Abs(moveDirection.x));
+
+        Vector2 targetVelocity = new Vector2(moveDirection.x * characterSpeed, characterRigidbody.velocity.y);
         characterRigidbody.velocity = Vector2.SmoothDamp(characterRigidbody.velocity, targetVelocity, ref velocityRef, movementSmoothing);
 
-        if (verticalInput > 0.1)
+        if (moveDirection.y > 0.1)
         {
             currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerUp;
             Debug.Log("Player Controller Up");
         }
-        else if (horizontalInput < 0 && horizontalInput != 0)
+        else if (moveDirection.x < 0 && moveDirection.x != 0)
         {
             transform.localScale = new Vector3(-1, 1, 1);
             characterLastPosition = transform.localScale;
@@ -114,7 +160,7 @@ public class PlayerController : MonoBehaviour
             playerHealthBar.localScale = new Vector3(-1, 1, 1);
             Debug.Log("Player Controller Left");
         }
-        else if (horizontalInput > 0 && horizontalInput != 0)
+        else if (moveDirection.x > 0 && moveDirection.x != 0)
         {
             transform.localScale = new Vector3(1, 1, 1);
             characterLastPosition = transform.localScale;
@@ -122,7 +168,7 @@ public class PlayerController : MonoBehaviour
             playerHealthBar.localScale = new Vector3(1, 1, 1);
             Debug.Log("Player Controller Right");
         }
-        else if (horizontalInput == 0)
+        else if (moveDirection.x == 0)
         {
             currentPlayerControllerDirection = PlayerControllerDirection.PlayerControllerStill;
             Debug.Log(characterLastPosition);
@@ -130,17 +176,21 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Player Controller Still");
         }
     }
-    private void Jump()
+    private void Jump(InputAction.CallbackContext context)
     {
+
         //characterRigidbody.velocity = (Vector2.up * jumpHeight);
-        if (playerAbilities.doubleJumpActivated == false)
+        if (CharacterIsGrounded())
         {
             characterRigidbody.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);
         }
-        else if (playerAbilities.doubleJumpActivated == true)
+        if (playerAbilities.doubleJumpActivated == false)
         {
-            characterRigidbody.AddForce(Vector2.up * augmentedJumpForce, ForceMode2D.Force);
         }
+        //else if (playerAbilities.doubleJumpActivated == true)
+        //{
+        //    characterRigidbody.AddForce(Vector2.up * augmentedJumpForce, ForceMode2D.Force);
+        //}
     }
     private bool CharacterIsGrounded()
     {
@@ -171,15 +221,18 @@ public class PlayerController : MonoBehaviour
     {
         bulletCharge = 0;
     }
-    void BasicBulletAbility()
+    void ShootBullet(InputAction.CallbackContext context)
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            bulletPrefab.GetComponent<Bullet>().bulletChargedPower = bulletCharge * 2;
-            Instantiate(bulletPrefab, bulletOrigin.position, Quaternion.identity);
-            PlayerShotBasicBullet.Invoke();
-            Debug.Log("Shooting Basic Bullet");
-        }
+        if (bulletCharge <= 0)
+            return;
+        bulletPrefab.GetComponent<Bullet>().bulletChargedPower = bulletCharge * 2;
+        Instantiate(bulletPrefab, bulletOrigin.position, Quaternion.identity);
+        //Vector3 bulletSize = new Vector3(1, 1, 1);
+        //bulletSize = new Vector3(1 * bulletCharge / 25, 1 * bulletCharge / 25, 1 * bulletCharge / 25);
+        //bulletPrefab.transform.localScale = bulletSize;
+        PlayerShotBasicBullet.Invoke();
+        bulletCharge = 0;
+        Debug.Log("Shooting Basic Bullet");
     }
     public void TakeDamage(float receivedDamage)
     {

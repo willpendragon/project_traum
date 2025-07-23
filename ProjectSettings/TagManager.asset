@@ -8,6 +8,11 @@ TagManager:
   - Music
   - Background
   - NoMask
+  - EnemyHitbox
+  - Enemy
+  - DialogueManager
+  - PlayerBullet
+  - PlayerHitbox
   layers:
   - Default
   - TransparentFX
@@ -15,29 +20,29 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - Platforms
+  - Bullet
   - Player
-  - Volumes
-  - OneWayPlatforms
-  - Projectiles
-  - Enemies
+  - PlayerHitbox
+  - GroundLayer
   - 
-  - Ladders
-  - PlayerProjectiles
-  - MovingObjects
-  - MovingPlatforms
-  - Foreground
-  - MovingOneWayPlatforms
-  - NoCollision
-  - Background
-  - Friendlies
-  - Invulnerable
-  - PlatformsPlayerOnly
-  - MidHeightOneWayPlatforms
-  - Pushables
-  - Stairs
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
